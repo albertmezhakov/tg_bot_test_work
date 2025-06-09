@@ -1,6 +1,5 @@
 from aiogram import Router
-import profile
-import fallback
+from . import fallback, profile
 
 
 def setup_handlers() -> Router:

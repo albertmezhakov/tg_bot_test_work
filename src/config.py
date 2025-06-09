@@ -20,6 +20,7 @@ class BotSettings(BaseSettings):
     postgres_port: str | None
 
     fsm_redis_host: str | None
+    fsm_redis_port: str | None
     fsm_redis_db: int | None
     fsm_redis_pass: str | None
 
