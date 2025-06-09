@@ -1,6 +1,4 @@
-FROM python:3.10 as base
-# set work directory
-WORKDIR /app/
+FROM python:3.12-slim AS base
 
 FROM base as docker-entrypoint
 
@@ -16,10 +14,12 @@ RUN pip --no-cache-dir install poetry
 
 COPY pyproject.toml poetry.lock /build/
 
+RUN poetry self add poetry-plugin-export
+
 RUN poetry export --without-hashes -f requirements.txt -o requirements.txt
 
 FROM non-root as app
-
+WORKDIR /app
 COPY --from=requirements-builder /build/requirements.txt /app/requirements.txt
 
 ENV PYTHONFAULTHANDLER=1 \
@@ -30,7 +30,7 @@ ENV PYTHONFAULTHANDLER=1 \
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy project
-COPY tg_bot_template ./tg_bot_template/
+COPY src ./src
 
 # run app
 ENTRYPOINT ["python", "-m"]

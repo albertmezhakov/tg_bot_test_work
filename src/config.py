@@ -1,5 +1,6 @@
 from enum import Enum
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -32,5 +33,20 @@ class BotSettings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env")
 
+    @property
+    def database_url(self) -> str:
+        return (
+            f"postgresql+asyncpg://{self.postgres_user}:"
+            f"{self.postgres_password}@{self.postgres_host}:"
+            f"{self.postgres_port}/{self.postgres_db}"
+        )
+
+    @property
+    def database_url_alembic(self) -> str:
+        return (
+            f"postgresql+asyncpg://{self.postgres_user}:"
+            f"{self.postgres_password}@127.0.0.1:"
+            f"{self.postgres_port}/{self.postgres_db}"
+        )
 
 settings = BotSettings()
