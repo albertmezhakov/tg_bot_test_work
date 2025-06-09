@@ -7,6 +7,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from app.interfaces.bot.middlewares.authorization import AuthorizationMiddleware
+from app.interfaces.bot.middlewares.user_profile_service import UserProfileServiceMiddleware
 from config import settings
 from app.interfaces.bot.handlers.init_handlers import setup_handlers
 from infrastructure.redis.fsm import fsm_storage
@@ -23,6 +24,9 @@ async def main():
 
     dp = Dispatcher(storage=MemoryStorage() if settings.environment.local_test else fsm_storage)
     dp.include_router(setup_handlers())
+
+    dp.message.middleware(UserProfileServiceMiddleware())
+
     dp.message.middleware(AuthorizationMiddleware())
     dp.callback_query.middleware(AuthorizationMiddleware())
     await dp.start_polling(bot)

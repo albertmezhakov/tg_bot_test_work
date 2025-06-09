@@ -5,8 +5,6 @@ from aiogram.filters import Command
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from app.states import ProfileState
-from infrastructure.db.session import AsyncSessionLocal
-from infrastructure.db.uow import UnitOfWork
 from app.services.user_profile_service import UserProfileService
 
 router = Router()
@@ -19,45 +17,36 @@ async def set_info_cmd(message: Message, state: FSMContext):
 
 
 @router.message(ProfileState.name, F.text)
-async def handle_name(message: Message, state: FSMContext):
+async def handle_name(message: Message, state: FSMContext, user_profile_service: UserProfileService):
     name = message.text
     user_id = message.from_user.id
 
-    async with AsyncSessionLocal() as session:
-        uow = UnitOfWork(session)
-        service = UserProfileService(uow)
-        await service.update_name(user_id, name)
+    await user_profile_service.update_name(user_id, name)
 
     await state.set_state(ProfileState.info)
     await message.answer("Отлично, записал. Теперь немного расскажите о себе.")
 
 
 @router.message(ProfileState.info)
-async def handle_info(message: Message, state: FSMContext):
+async def handle_info(message: Message, state: FSMContext, user_profile_service: UserProfileService):
     info = message.text
     user_id = message.from_user.id
 
-    async with AsyncSessionLocal() as session:
-        uow = UnitOfWork(session)
-        service = UserProfileService(uow)
-        await service.update_info(user_id, info)
+    await user_profile_service.update_info(user_id, info)
 
     await state.set_state(ProfileState.photo)
     await message.answer("Отлично, записал. Теперь скиньте свое фото.")
 
 
 @router.message(ProfileState.photo, F.photo)
-async def handle_photo(message: Message, state: FSMContext):
+async def handle_photo(message: Message, state: FSMContext, user_profile_service: UserProfileService):
     user_id = message.from_user.id
     photo = message.photo[0]
 
     file = await message.bot.get_file(photo.file_id)
     file_path = file.file_path
 
-    async with AsyncSessionLocal() as session:
-        uow = UnitOfWork(session)
-        service = UserProfileService(uow)
-        await service.update_photo(user_id, file_path)
+    await user_profile_service.update_photo(user_id, file_path)
 
     await state.clear()
     await message.answer("Готово, данные обновлены.", reply_markup=_menu_kb())
@@ -74,6 +63,7 @@ def _menu_kb():
 async def handle_name_wrong_type(message: Message, state: FSMContext):
     # TODO: Вынести в texts.profile
     await message.answer("Не вижу в сообщении текста, попробуйте еще раз!")
+
 
 @router.message(ProfileState.info)
 async def handle_info_wrong_type(message: Message, state: FSMContext):
