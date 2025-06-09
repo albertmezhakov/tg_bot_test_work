@@ -15,6 +15,12 @@ class UserRepository:
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
 
+    async def exists_by_social_id(self, user_id: int) -> bool:
+        user = await self.get_by_social_id(user_id)
+        if user is None:
+            return False
+        return True
+
     async def create(self, user: User, **kwargs) -> User | None:
         for key, value in kwargs.items():
             setattr(user, key, value)

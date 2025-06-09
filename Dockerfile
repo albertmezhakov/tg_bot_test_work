@@ -33,7 +33,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src ./src
 
 # run app
-ENTRYPOINT ["python", "-m"]
-CMD ["tg_bot_template.bot"]
+WORKDIR /app/src
+ENTRYPOINT ["python", "main_bot.py"]
 
 FROM app
