@@ -1,6 +1,6 @@
 from aiogram import Router
 from aiogram.exceptions import TelegramBadRequest
-from aiogram.types import ErrorEvent, ChatMemberUpdated
+from aiogram.types import ChatMemberUpdated, ErrorEvent
 from loguru import logger
 
 router = Router()
