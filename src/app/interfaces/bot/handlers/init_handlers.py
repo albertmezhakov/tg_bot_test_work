@@ -1,6 +1,6 @@
 from aiogram import Router
 
-from . import fallback, profile, base, errors
+from . import base, errors, fallback, profile
 
 
 def setup_handlers() -> Router:
