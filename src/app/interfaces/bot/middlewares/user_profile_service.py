@@ -1,6 +1,6 @@
 from aiogram import BaseMiddleware
 
-from app.services.user_profile_service import UserProfileService
+from app.use_cases.user_profile_service import UserProfileService
 from infrastructure.db.session import AsyncSessionLocal
 from infrastructure.db.uow import UnitOfWork
 

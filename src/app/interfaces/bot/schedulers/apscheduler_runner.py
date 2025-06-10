@@ -4,7 +4,7 @@ from aiogram import Bot
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
-from app.use_cases.healthcheck import healthcheck
+from app.interfaces.bot.tasks.healthcheck import healthcheck
 from config import settings
 
 

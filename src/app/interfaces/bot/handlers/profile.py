@@ -4,8 +4,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-from app.services.user_profile_service import UserProfileService
-from app.states import ProfileState
+from app.use_cases.user_profile_service import UserProfileService
+from app.interfaces.bot.states import ProfileState
 
 router = Router()
 

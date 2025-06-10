@@ -1,4 +1,4 @@
-from infrastructure.db import User
+from app.domain.user import User
 from infrastructure.db.uow import UnitOfWork
 
 

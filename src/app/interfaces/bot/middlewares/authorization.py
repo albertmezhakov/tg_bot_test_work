@@ -1,7 +1,7 @@
 from aiogram import BaseMiddleware
 from aiogram.types import Message
 
-from app.services.user_auth_service import UserAuthService
+from app.use_cases.user_auth_service import UserAuthService
 from infrastructure.db.session import AsyncSessionLocal
 from infrastructure.db.uow import UnitOfWork
 
