@@ -2,9 +2,9 @@ import logging
 
 from aiogram import Dispatcher, Router, Bot
 
-from app.schedulers.apscheduler_runner import start_scheduler
-from app.use_cases.healthcheck import notify_admin_on_bot_status
-from app.use_cases.setup_bot_commands import setup_bot_commands
+from app.interfaces.bot.schedulers.apscheduler_runner import start_scheduler
+from app.interfaces.bot.tasks.healthcheck import notify_admin_on_bot_status
+from app.interfaces.bot.commands_setup import setup_bot_commands
 from config import settings
 
 logger = logging.getLogger(__name__)

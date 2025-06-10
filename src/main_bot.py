@@ -10,7 +10,7 @@ from app.interfaces.bot.handlers.init_handlers import setup_handlers
 from app.interfaces.bot.middlewares.authorization import AuthorizationMiddleware
 from app.interfaces.bot.middlewares.user_profile_service import UserProfileServiceMiddleware
 from config import settings
-from infrastructure.bot.lifecycle import router as lifecycle_router
+from app.interfaces.bot.lifecycle import router as lifecycle_router
 from infrastructure.redis.fsm import fsm_storage
 
 
