@@ -60,18 +60,18 @@ def _menu_kb():
 
 
 @router.message(ProfileState.name)
-async def handle_name_wrong_type(message: Message, state: FSMContext):
+async def handle_name_wrong_type(message: Message):
     # TODO: Вынести в texts.profile
     await message.answer("Не вижу в сообщении текста, попробуйте еще раз!")
 
 
 @router.message(ProfileState.info)
-async def handle_info_wrong_type(message: Message, state: FSMContext):
+async def handle_info_wrong_type(message: Message):
     # TODO: Вынести в texts.profile
     await message.answer("Не вижу в сообщении текста, попробуйте еще раз!")
 
 
 @router.message(ProfileState.photo)
-async def handle_photo_wrong_type(message: Message, state: FSMContext):
+async def handle_photo_wrong_type(message: Message):
     # TODO: Вынести в texts.profile
     await message.answer("Не вижу в сообщении фото, попробуйте еще раз! Возможно вам нужно отправить фото без сжатия.")
