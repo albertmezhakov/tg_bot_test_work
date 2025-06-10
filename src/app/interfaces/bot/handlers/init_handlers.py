@@ -1,4 +1,5 @@
 from aiogram import Router
+
 from . import fallback, profile, ping_pong
 
 
