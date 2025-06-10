@@ -3,8 +3,8 @@ from typing import Sequence
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from infrastructure.db.models import User as ORMUser
 from app.domain.user import User as DomainUser
+from infrastructure.db.models import User as ORMUser
 
 
 class UserRepository:

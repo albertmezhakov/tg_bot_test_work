@@ -1,6 +1,5 @@
 from enum import Enum
 
-from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -49,5 +48,6 @@ class BotSettings(BaseSettings):
             f"{self.postgres_password}@127.0.0.1:"
             f"{self.postgres_port}/{self.postgres_db}"
         )
+
 
 settings = BotSettings()

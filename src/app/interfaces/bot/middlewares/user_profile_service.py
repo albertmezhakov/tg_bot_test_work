@@ -1,7 +1,9 @@
 from aiogram import BaseMiddleware
+
+from app.services.user_profile_service import UserProfileService
 from infrastructure.db.session import AsyncSessionLocal
 from infrastructure.db.uow import UnitOfWork
-from app.services.user_profile_service import UserProfileService
+
 
 class UserProfileServiceMiddleware(BaseMiddleware):
     async def __call__(self, handler, event, data):

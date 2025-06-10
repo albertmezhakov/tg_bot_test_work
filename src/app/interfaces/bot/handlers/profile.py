@@ -1,11 +1,11 @@
 from aiogram import Router, F
-from aiogram.types import Message
-from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram.types import Message
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-from app.states import ProfileState
 from app.services.user_profile_service import UserProfileService
+from app.states import ProfileState
 
 router = Router()
 
