@@ -16,6 +16,7 @@ async def set_info_cmd(message: Message, state: FSMContext):
     await message.answer("Напишите ваше имя")
 
 
+
 @router.message(ProfileState.name, F.text)
 async def handle_name(message: Message, state: FSMContext, user_profile_service: UserProfileService):
     name = message.text

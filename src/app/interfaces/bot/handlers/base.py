@@ -17,3 +17,8 @@ async def ping_pong(message: Message):
 async def creator(message: Message):
     if message.from_user.id == settings.creator_id:
         await message.answer("*Master?*", parse_mode=ParseMode.MARKDOWN)
+
+
+@router.message(Command(commands=["help"]))
+async def cmd_help(message: Message):
+    await message.answer("Бот для соревнования по тыканью по кнопке. Тыкай в кнопку и побеждай!")
