@@ -1,5 +1,5 @@
 from app.interfaces.bot.features import features
-from app.interfaces.bot.keybords.keyboard_entry import KeyboardEntry
+from app.interfaces.bot.keyboards.keyboard_entry import KeyboardEntry
 
 menu_kb = KeyboardEntry(
     features=[

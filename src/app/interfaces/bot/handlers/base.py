@@ -4,7 +4,7 @@ from aiogram.types import Message
 
 from app.interfaces.bot.features import features
 from app.interfaces.bot.filters.text_ignore_case import TextInIgnoreCase
-from app.interfaces.bot.keybords import keyboards
+from app.interfaces.bot.keyboards import keyboards
 from config import settings
 
 router = Router()

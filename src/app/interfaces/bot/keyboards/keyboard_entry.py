@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable
+from typing import Callable, ClassVar
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
@@ -9,7 +9,7 @@ from app.interfaces.bot.features.feature_entry import FeatureEntry
 
 
 class KeyboardEntry:
-    all_keyboards: list[KeyboardEntry] = []
+    all_keyboards: ClassVar[list[KeyboardEntry]] = []
 
     def __init__(
             self,
