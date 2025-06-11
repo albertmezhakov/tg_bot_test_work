@@ -24,3 +24,10 @@ cancel = FeatureEntry(
     commands=["cancel"],
     callback_action="cancel"
 )
+
+rating = FeatureEntry(
+    slashed_command="/rating",
+    slashed_command_descr="global rating",
+    button="Рейтинг",
+    set_to_bot_commands=True,
+)

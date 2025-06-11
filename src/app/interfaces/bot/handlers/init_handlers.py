@@ -1,10 +1,11 @@
 from aiogram import Router
 
-from . import base, cancel, errors, fallback, profile
+from . import base, cancel, errors, fallback, profile, game
 
 
 def setup_handlers() -> Router:
     router = Router()
+    router.include_router(game.router)
     router.include_router(profile.router)
     router.include_router(base.router)
     router.include_router(cancel.router)
