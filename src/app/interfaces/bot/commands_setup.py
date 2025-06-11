@@ -7,5 +7,6 @@ async def setup_bot_commands(bot: Bot) -> None:
     cmds: list[FeatureEntry] = FeatureEntry.commands_to_set
     bot_commands = [types.BotCommand(command=ftr.slashed_command, description=ftr.slashed_command_descr) for ftr in
                     cmds]
+    print(bot_commands)
     await bot.delete_my_commands()
     await bot.set_my_commands(bot_commands)

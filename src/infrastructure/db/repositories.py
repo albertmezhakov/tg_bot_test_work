@@ -2,6 +2,7 @@ from collections.abc import Sequence
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import update
 
 from app.domain.user import User as DomainUser
 from infrastructure.db.models import User as ORMUser
@@ -15,6 +16,19 @@ class UserRepository:
         stmt = select(ORMUser).where(ORMUser.social_id == social_id)
         result = await self.session.execute(stmt)
         orm_user = result.scalar_one_or_none()
+        return self._to_domain(orm_user) if orm_user else None
+
+    async def add_tap(self, social_id: int) -> DomainUser | None:
+        stmt = (
+            update(ORMUser)
+            .where(ORMUser.social_id == social_id)
+            .values(taps=ORMUser.taps + 1)
+            .returning(ORMUser)
+        )
+        result = await self.session.execute(stmt)
+        orm_user = result.scalar_one_or_none()
+        await self.session.commit()
+
         return self._to_domain(orm_user) if orm_user else None
 
     async def exists_by_social_id(self, user_id: int) -> bool:

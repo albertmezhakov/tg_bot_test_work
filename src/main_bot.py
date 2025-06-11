@@ -28,8 +28,9 @@ async def main():
     dp.include_router(setup_handlers())
 
     dp.message.middleware(UserProfileServiceMiddleware())
-    dp.message.middleware(AuthorizationMiddleware())
+    dp.callback_query.middleware(UserProfileServiceMiddleware())
 
+    dp.message.middleware(AuthorizationMiddleware())
     dp.callback_query.middleware(AuthorizationMiddleware())
     await dp.start_polling(bot)
 

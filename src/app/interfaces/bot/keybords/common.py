@@ -3,7 +3,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
 def _menu_kb():
     kb = ReplyKeyboardBuilder()
-    kb.button(text="Меню", callback_data="main_menu")
+    kb.button(text="Меню")
     return kb.as_markup()
 
 

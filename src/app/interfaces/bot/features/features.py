@@ -31,3 +31,19 @@ rating = FeatureEntry(
     button="Рейтинг",
     set_to_bot_commands=True,
 )
+
+send_tap_btn = FeatureEntry(
+    slashed_command="/push_the_button",
+    slashed_command_descr="we gonna push the button",
+    set_to_bot_commands=True,
+)
+
+tap = FeatureEntry(
+    button="Нажми на меня",
+    callback_action="tap"
+)
+
+to_menu = FeatureEntry(
+    button="Меню",
+    callback_action="menu"
+)
