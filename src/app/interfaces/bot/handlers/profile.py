@@ -1,16 +1,17 @@
 from aiogram import F, Router
-from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
+from app.interfaces.bot.features import features
+from app.interfaces.bot.filters.text_ignore_case import TextInIgnoreCase
 from app.interfaces.bot.states import ProfileState
 from app.use_cases.user_profile_service import UserProfileService
 
 router = Router()
 
 
-@router.message(Command("set_info"))
+@router.message(TextInIgnoreCase(features.set_info.triggers))
 async def set_info_cmd(message: Message, state: FSMContext):
     await state.set_state(ProfileState.name)
     await message.answer("Напишите ваше имя")
