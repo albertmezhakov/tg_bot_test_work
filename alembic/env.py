@@ -1,19 +1,17 @@
-import sys
 import os
+import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 import asyncio
 from logging.config import fileConfig
 
 from sqlalchemy import pool
-
-from alembic import context
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+from alembic import context
 from config import settings
 from infrastructure.db.base import Base
-
 
 config = context.config
 config.set_main_option("sqlalchemy.url", settings.database_url_alembic)

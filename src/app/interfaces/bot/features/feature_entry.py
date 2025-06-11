@@ -3,7 +3,6 @@ from __future__ import annotations
 
 class FeatureEntry:
     commands_to_set: list[FeatureEntry] = []
-    handlers: list[FeatureEntry] = []
 
     def __init__(
             self,
@@ -23,10 +22,9 @@ class FeatureEntry:
 
         if set_to_bot_commands:
             if not (self.slashed_command and self.slashed_command_descr):
-                raise AttributeError("slashed_command and slashed_command_descr fields must be set")
+                raise AttributeError("`slashed_command` and `slashed_command_descr` fields must be set")
             self.commands_to_set.append(self)
 
-        self.handlers.append(self)
 
     @property
     def triggers(self) -> list[str]:
