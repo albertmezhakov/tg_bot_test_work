@@ -1,12 +1,14 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.domain.repositories.user_repository import AbstractUserRepository
+from app.domain.uow import AbstractUnitOfWork
 from infrastructure.db.repositories import UserRepository
 
 
-class UnitOfWork:
+class UnitOfWork(AbstractUnitOfWork):
     def __init__(self, session: AsyncSession):
         self.session = session
-        self.users = UserRepository(self.session)
+        self.users: AbstractUserRepository = UserRepository(self.session)
 
     async def __aenter__(self) -> "UnitOfWork":
         return self

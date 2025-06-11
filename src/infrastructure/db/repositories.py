@@ -3,11 +3,12 @@ from collections.abc import Sequence
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.domain.repositories.user_repository import AbstractUserRepository
 from app.domain.user import User as DomainUser
 from infrastructure.db.models import User as ORMUser
 
 
-class UserRepository:
+class UserRepository(AbstractUserRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 

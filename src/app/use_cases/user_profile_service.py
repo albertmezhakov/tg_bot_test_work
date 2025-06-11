@@ -1,9 +1,10 @@
+from app.domain.uow import AbstractUnitOfWork
 from app.domain.user import User
 from infrastructure.db.uow import UnitOfWork
 
 
 class UserProfileService:
-    def __init__(self, uow: UnitOfWork):
+    def __init__(self, uow: AbstractUnitOfWork):
         self.uow = uow
 
     async def update_name(self, user_id: int, name: str) -> None:
