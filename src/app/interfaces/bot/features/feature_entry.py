@@ -5,14 +5,14 @@ class FeatureEntry:
     commands_to_set: list[FeatureEntry] = []
 
     def __init__(
-            self,
-            *,
-            slashed_command: str | None = None,
-            slashed_command_descr: str | None = None,
-            button: str | None = None,
-            commands: list[str] | None = None,
-            callback_action: str | None = None,
-            set_to_bot_commands: bool = False
+        self,
+        *,
+        slashed_command: str | None = None,
+        slashed_command_descr: str | None = None,
+        button: str | None = None,
+        commands: list[str] | None = None,
+        callback_action: str | None = None,
+        set_to_bot_commands: bool = False,
     ):
         self.slashed_command = slashed_command
         self.slashed_command_descr = slashed_command_descr
@@ -24,7 +24,6 @@ class FeatureEntry:
             if not (self.slashed_command and self.slashed_command_descr):
                 raise AttributeError("`slashed_command` and `slashed_command_descr` fields must be set")
             self.commands_to_set.append(self)
-
 
     @property
     def triggers(self) -> list[str]:

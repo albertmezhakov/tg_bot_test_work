@@ -25,8 +25,9 @@ async def handle_name(message: Message, state: FSMContext, user_profile_service:
     await user_profile_service.update_name(user_id, name)
 
     await state.set_state(ProfileState.info)
-    await message.answer("Отлично, записал. Теперь немного расскажите о себе.",
-                         reply_markup=keyboards.cancel_kb.as_reply_markup())
+    await message.answer(
+        "Отлично, записал. Теперь немного расскажите о себе.", reply_markup=keyboards.cancel_kb.as_reply_markup()
+    )
 
 
 @router.message(ProfileState.info)
@@ -37,8 +38,9 @@ async def handle_info(message: Message, state: FSMContext, user_profile_service:
     await user_profile_service.update_info(user_id, info)
 
     await state.set_state(ProfileState.photo)
-    await message.answer("Отлично, записал. Теперь скиньте свое фото.",
-                         reply_markup=keyboards.cancel_kb.as_reply_markup())
+    await message.answer(
+        "Отлично, записал. Теперь скиньте свое фото.", reply_markup=keyboards.cancel_kb.as_reply_markup()
+    )
 
 
 @router.message(ProfileState.photo, F.photo)
