@@ -7,4 +7,4 @@ from app.domain.user import User
 class UserRating:
     user_taps: int
     total_taps: int
-    user_best: User | None= None
+    user_best: User | None = None

@@ -6,7 +6,7 @@ from infrastructure.db.session import AsyncSessionLocal
 from infrastructure.db.uow import UnitOfWork
 
 
-class UserProfileServiceMiddleware(BaseMiddleware):
+class DependencyInjectionMiddleware(BaseMiddleware):
     async def __call__(self, handler, event, data):
         async with AsyncSessionLocal() as session:
             uow = UnitOfWork(session)

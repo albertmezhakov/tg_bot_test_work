@@ -1,35 +1,43 @@
-from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram import Router
+from aiogram.types import CallbackQuery, Message
 
 from app.domain.user_rating import UserRating
 from app.interfaces.bot.features import features
+from app.interfaces.bot.filters.callback_prefix import CallbackPrefixFilter
 from app.interfaces.bot.filters.text_ignore_case import TextInIgnoreCase
-from app.interfaces.bot.keybords.common import _menu_kb
-from app.interfaces.bot.keybords.game import tap_kb
+from app.interfaces.bot.keybords import keyboards
 from app.use_cases.user_game_service import UserGameService
-from infrastructure.db import User
 
 router = Router()
 
 
 @router.message(TextInIgnoreCase(features.rating.triggers))
-async def rating(message: Message, user_game_service: UserGameService):
+async def rating_cmd(message: Message, user_game_service: UserGameService):
     rating: UserRating = await user_game_service.get_rating(message.from_user.id)
     await message.answer(f"Всего нажатий твоих: {rating.user_taps}\nВсего нажатий: {rating.total_taps}",
-                         reply_markup=_menu_kb())
+                         reply_markup=keyboards.menu_kb.as_reply_markup())
     if rating.user_best is not None and rating.total_taps > 0:
         await message.answer(
             f"Лучший жмакер:\n{rating.user_best.name}[@{rating.user_best.username}]\n{rating.user_best.info}")
         await message.answer_photo(rating.user_best.photo)
 
 
-@router.message(TextInIgnoreCase(features.send_tap_btn.triggers))
+@router.message(TextInIgnoreCase(features.send_tap.triggers))
 async def send_tap_btn(message: Message):
-    await message.answer("Нажатий за последнюю сессию: 0", reply_markup=tap_kb())
+    await message.answer("Нажатий за последнюю сессию: 0",
+                         reply_markup=keyboards.tap_kb.as_inline_markup(suffix=":0",
+                                                                        should_add_suffix=lambda
+                                                                            f: f is features.tap_btn
+                                                                        ))
 
 
-@router.callback_query(F.data == features.tap.callback_action)
+@router.callback_query(CallbackPrefixFilter(features.tap_btn.callback_action))
 async def action_tap(callback: CallbackQuery, user_game_service: UserGameService):
-    user: User = await user_game_service.register_tap(callback.from_user.id)
-    await callback.message.edit_text(f"Нажатий за последнюю сессию: {user.taps}", reply_markup=tap_kb())
+    await user_game_service.register_tap(callback.from_user.id)
+    session_taps = int(callback.data.split(":")[1]) + 1
+    await callback.message.edit_text(f"Нажатий за последнюю сессию: {session_taps}",
+                                     reply_markup=keyboards.tap_kb.as_inline_markup(
+                                         suffix=f":{session_taps}",
+                                         should_add_suffix=lambda f: f is features.tap_btn
+                                     ))
     await callback.answer()

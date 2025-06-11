@@ -24,7 +24,7 @@ class UserAuthService:
             await self.uow.users.create(User(
                 social_id=user_id,
                 username=username,
-                registration_date=datetime.now() # timezone ??
+                registration_date=datetime.now()  # timezone ??
             ))
             await self.uow.commit()
             return False, "Welcome to bot"

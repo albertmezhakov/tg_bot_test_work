@@ -1,8 +1,7 @@
 from collections.abc import Sequence
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import update
 
 from app.domain.user import User as DomainUser
 from infrastructure.db.models import User as ORMUser

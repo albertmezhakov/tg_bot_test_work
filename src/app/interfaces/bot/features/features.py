@@ -17,11 +17,12 @@ creator = FeatureEntry(
     commands=["creator"]
 )
 
-help = FeatureEntry(
+help_cmd = FeatureEntry(
     commands=["help"]
 )
 cancel = FeatureEntry(
     commands=["cancel"],
+    button="Отмена",
     callback_action="cancel"
 )
 
@@ -32,18 +33,21 @@ rating = FeatureEntry(
     set_to_bot_commands=True,
 )
 
-send_tap_btn = FeatureEntry(
+send_tap = FeatureEntry(
     slashed_command="/push_the_button",
     slashed_command_descr="we gonna push the button",
+    button="Отправить кнопку",
     set_to_bot_commands=True,
 )
 
-tap = FeatureEntry(
+tap_btn = FeatureEntry(
     button="Нажми на меня",
     callback_action="tap"
 )
 
-to_menu = FeatureEntry(
-    button="Меню",
-    callback_action="menu"
+start = FeatureEntry(
+    slashed_command="/start",
+    slashed_command_descr="main menu",
+    commands=["menu"],
+    set_to_bot_commands=True
 )

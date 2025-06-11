@@ -28,7 +28,6 @@ class BotSettings(BaseSettings):
 
     environment: Envs = Envs.local_test
 
-    inline_kb_button_row_width: int = 2
     schedule_healthcheck: str = "7:00"  # !!!UTC timezone!!!
 
     model_config = SettingsConfigDict(env_file=".env")
