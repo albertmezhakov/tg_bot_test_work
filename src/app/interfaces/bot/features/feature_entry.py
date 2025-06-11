@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from typing import ClassVar
+
 
 class FeatureEntry:
-    commands_to_set: list[FeatureEntry] = []
+    commands_to_set: ClassVar[list[FeatureEntry]]= []
 
     def __init__(
         self,

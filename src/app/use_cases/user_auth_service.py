@@ -2,10 +2,11 @@ from datetime import datetime, timezone
 
 from app.domain.user import User
 from config import settings
+from infrastructure.db.uow import UnitOfWork
 
 
 class UserAuthService:
-    def __init__(self, uow):
+    def __init__(self, uow: UnitOfWork):
         self.uow = uow
 
     async def check_or_register(

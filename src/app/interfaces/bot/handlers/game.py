@@ -5,7 +5,7 @@ from app.domain.user_rating import UserRating
 from app.interfaces.bot.features import features
 from app.interfaces.bot.filters.callback_prefix import CallbackPrefixFilter
 from app.interfaces.bot.filters.text_ignore_case import TextInIgnoreCase
-from app.interfaces.bot.keybords import keyboards
+from app.interfaces.bot.keyboards import keyboards
 from app.use_cases.user_game_service import UserGameService
 
 router = Router()

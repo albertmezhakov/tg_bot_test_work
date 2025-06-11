@@ -4,8 +4,8 @@ from aiogram.types import Message
 
 from app.interfaces.bot.features import features
 from app.interfaces.bot.filters.text_ignore_case import TextInIgnoreCase
-from app.interfaces.bot.keybords import keyboards
-from app.interfaces.bot.states import ProfileState
+from app.interfaces.bot.keyboards import keyboards
+from app.interfaces.bot.states.profile import ProfileState
 from app.use_cases.user_profile_service import UserProfileService
 
 router = Router()
