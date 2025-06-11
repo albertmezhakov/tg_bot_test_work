@@ -1,4 +1,4 @@
-SERVICE_DIR := tg_bot_template
+SERVICE_DIR := src
 TXT_BOLD := \e[1m
 TXT_MAGENTA := \e[35m
 TXT_RESET := \e[0m

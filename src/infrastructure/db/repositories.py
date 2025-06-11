@@ -18,12 +18,7 @@ class UserRepository:
         return self._to_domain(orm_user) if orm_user else None
 
     async def add_tap(self, social_id: int) -> DomainUser | None:
-        stmt = (
-            update(ORMUser)
-            .where(ORMUser.social_id == social_id)
-            .values(taps=ORMUser.taps + 1)
-            .returning(ORMUser)
-        )
+        stmt = update(ORMUser).where(ORMUser.social_id == social_id).values(taps=ORMUser.taps + 1).returning(ORMUser)
         result = await self.session.execute(stmt)
         orm_user = result.scalar_one_or_none()
         await self.session.commit()

@@ -17,8 +17,7 @@ class KeyboardEntry:
             features: list[list[FeatureEntry]]
     ):
         self.features = features
-
-        self.__class__.all_keyboards.append(self)
+        self.all_keyboards.append(self)
 
     def as_inline_markup(
             self,
