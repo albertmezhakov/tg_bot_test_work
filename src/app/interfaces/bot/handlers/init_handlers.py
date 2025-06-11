@@ -9,6 +9,6 @@ def setup_handlers() -> Router:
     router.include_router(game.router)
     router.include_router(profile.router)
     router.include_router(base.router)
-    router.include_router(errors.router)
+    # router.include_router(errors.router)
     router.include_router(fallback.router)
     return router

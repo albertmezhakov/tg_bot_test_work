@@ -1,6 +1,7 @@
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
+from app.domain.auth_result import AuthStatus
 from app.use_cases.user_auth_service import UserAuthService
 from infrastructure.db.session import AsyncSessionLocal
 from infrastructure.db.uow import UnitOfWork
@@ -9,6 +10,7 @@ from infrastructure.db.uow import UnitOfWork
 class AuthorizationMiddleware(BaseMiddleware):
     async def __call__(self, handler, event: TelegramObject, data):
         async with AsyncSessionLocal() as session:
+            print(11111)
             uow = UnitOfWork(session)
             auth_service = UserAuthService(uow)
 
@@ -16,13 +18,14 @@ class AuthorizationMiddleware(BaseMiddleware):
             username = event.from_user.username
             passphrase = event.text.lower() if event.text else None
 
-            is_auth, response = await auth_service.check_or_register(
+            auth_result = await auth_service.check_or_register(
                 user_id=user_id,
                 username=username,
                 passphrase=passphrase,
             )
-            if is_auth:
+            print(auth_result)
+            if auth_result.status == AuthStatus.SUCCESS:
                 return await handler(event, data)
-            if response:
-                await event.answer(response)
+
+            await event.answer(auth_result.message)
             return None
