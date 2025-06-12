@@ -22,7 +22,7 @@ class UserAuthService:
             if not username:
                 return AuthResult(
                     AuthStatus.NEED_USERNAME,
-                    "Для регистрации заполните, пожалуйста, Имя пользователя в своем профиле, иначе вас не смогут найти другие участники!"
+                    "Для регистрации заполните, пожалуйста, Имя пользователя в своем профиле, иначе вас не смогут найти другие участники!",
                 )
             await self.uow.users.create(
                 User(social_id=user_id, username=username, registration_date=datetime.now())

@@ -6,7 +6,7 @@ set_info = FeatureEntry(
     slashed_command="/set_info",
     slashed_command_descr="set profile info",
     button="Мой профиль",
-    set_to_bot_commands=True
+    set_to_bot_commands=True,
 )
 
 ping_pong = FeatureEntry(

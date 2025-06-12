@@ -4,7 +4,7 @@ from typing import ClassVar
 
 
 class FeatureEntry:
-    commands_to_set: ClassVar[list[FeatureEntry]]= []
+    commands_to_set: ClassVar[list[FeatureEntry]] = []
 
     def __init__(
         self,
