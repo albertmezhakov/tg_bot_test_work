@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from app.domain.auth_result import AuthResult, AuthStatus
 from app.domain.user import User
@@ -15,7 +15,6 @@ class UserAuthService:
     ) -> AuthResult:
         async with self.uow:
             user_exists = await self.uow.users.exists_by_social_id(user_id)
-            print(user_exists)
             if user_exists:
                 return AuthResult(AuthStatus.SUCCESS)
             if settings.register_passphrase and passphrase != settings.register_passphrase:

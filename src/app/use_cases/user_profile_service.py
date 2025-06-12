@@ -1,6 +1,5 @@
 from app.domain.uow import AbstractUnitOfWork
 from app.domain.user import User
-from infrastructure.db.uow import UnitOfWork
 
 
 class UserProfileService:
