@@ -1,12 +1,10 @@
 FROM python:3.12-slim AS base
 
-FROM base as docker-entrypoint
-
-FROM docker-entrypoint as non-root
+FROM base AS non-root
 RUN useradd -ms /bin/bash app
 USER app
 
-FROM base as requirements-builder
+FROM base AS requirements-builder
 
 WORKDIR /build/
 
@@ -18,7 +16,7 @@ RUN poetry self add poetry-plugin-export
 
 RUN poetry export --without-hashes -f requirements.txt -o requirements.txt
 
-FROM non-root as app
+FROM non-root AS app
 WORKDIR /app
 COPY --from=requirements-builder /build/requirements.txt /app/requirements.txt
 
@@ -31,9 +29,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # copy project
 COPY src ./src
+COPY alembic.ini .
+COPY alembic ./alembic
 
 # run app
-WORKDIR /app/src
-ENTRYPOINT ["python", "main_bot.py"]
-
-FROM app
+WORKDIR /app
+ENTRYPOINT ["sh", "-c", "python -m alembic upgrade head && python src/main_bot.py"]
