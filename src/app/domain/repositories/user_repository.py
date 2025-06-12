@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
+from typing import Union
 
 from app.domain.user import User
 
@@ -10,7 +11,7 @@ class AbstractUserRepository(ABC):
         ...
 
     @abstractmethod
-    async def add_tap(self, social_id: int) -> User | None:
+    async def add_tap(self, social_id: int) -> Union[User, None]:
         ...
 
     @abstractmethod

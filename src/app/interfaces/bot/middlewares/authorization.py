@@ -10,7 +10,6 @@ from infrastructure.db.uow import UnitOfWork
 class AuthorizationMiddleware(BaseMiddleware):
     async def __call__(self, handler, event: TelegramObject, data):
         async with AsyncSessionLocal() as session:
-            print(11111)
             uow = UnitOfWork(session)
             auth_service = UserAuthService(uow)
 
@@ -23,7 +22,6 @@ class AuthorizationMiddleware(BaseMiddleware):
                 username=username,
                 passphrase=passphrase,
             )
-            print(auth_result)
             if auth_result.status == AuthStatus.SUCCESS:
                 return await handler(event, data)
 
