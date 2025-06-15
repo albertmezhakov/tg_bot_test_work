@@ -5,8 +5,7 @@ import sys
 
 import pytest_asyncio
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from tests_utils.dummy_config import dummy_config
 
 ROOT_DIR = pathlib.Path(__file__).resolve().parents[1]

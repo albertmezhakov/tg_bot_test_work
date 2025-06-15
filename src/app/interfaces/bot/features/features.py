@@ -9,22 +9,12 @@ set_info = FeatureEntry(
     set_to_bot_commands=True,
 )
 
-ping_pong = FeatureEntry(
-    commands=["ping", "health", "healthcheck"]
-)
+ping_pong = FeatureEntry(commands=["ping", "health", "healthcheck"])
 
-creator = FeatureEntry(
-    commands=["creator"]
-)
+creator = FeatureEntry(commands=["creator"])
 
-help_cmd = FeatureEntry(
-    commands=["help"]
-)
-cancel = FeatureEntry(
-    commands=["cancel"],
-    button="Отмена",
-    callback_action="cancel"
-)
+help_cmd = FeatureEntry(commands=["help"])
+cancel = FeatureEntry(commands=["cancel"], button="Отмена", callback_action="cancel")
 
 rating = FeatureEntry(
     slashed_command="/rating",
@@ -40,14 +30,8 @@ send_tap = FeatureEntry(
     set_to_bot_commands=True,
 )
 
-tap_btn = FeatureEntry(
-    button="Нажми на меня",
-    callback_action="tap"
-)
+tap_btn = FeatureEntry(button="Нажми на меня", callback_action="tap")
 
 start = FeatureEntry(
-    slashed_command="/start",
-    slashed_command_descr="main menu",
-    commands=["menu"],
-    set_to_bot_commands=True
+    slashed_command="/start", slashed_command_descr="main menu", commands=["menu"], set_to_bot_commands=True
 )

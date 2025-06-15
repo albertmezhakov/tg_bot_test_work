@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pytest
-
 from tests_utils.dummy_config import dummy_config
 
 dummy_config()
