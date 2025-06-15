@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "tgbot-template"
-version = "0.1.0"
-description = "simple template for tg bot via aiogram"
-authors = ["NekitPnt <panatikin@gmail.com>"]
+name = "tgbot-template-with-clean-architecture"
+version = "0.2.0"
+description = "simple template for tg bot via aiogram 3 and clean architecture"
+authors = ["NekitPnt <panatikin@gmail.com>", "BerhtAdal <albertmezhakov@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -22,14 +22,20 @@ pydantic = "^2.11.5"
 pydantic-settings = "^2.9.1"
 greenlet = "^3.2.3"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.0"
+testcontainers = "^4.10.0"
+pytest-asyncio = "^1.0.0"
+aiosqlite = "^0.21.0"
 
 [tool.poetry.group.lint.dependencies]
 mypy = "*"
 ruff = "*"
 black = "^22"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 120
@@ -59,35 +65,35 @@ ignore_errors = true
 [tool.ruff]
 # https://beta.ruff.rs/docs/rules/
 select = [
-  "E",
-  "F",
-  "W",
-  "C90",
-  "I",
-  "N",
-  "UP",
-  "YTT",
-  "ASYNC",
-  "S",
-  "B",
-  "C4",
-  "DTZ",
-  "T10",
-  "ISC",
-  "ICN",
-  "PIE",
-  "T20",
-  "PT",
-  "Q",
-  "RET",
-  "SLF",
-  "SIM",
-  "ERA",
-  "PLE",
-  "TRY",
+    "E",
+    "F",
+    "W",
+    "C90",
+    "I",
+    "N",
+    "UP",
+    "YTT",
+    "ASYNC",
+    "S",
+    "B",
+    "C4",
+    "DTZ",
+    "T10",
+    "ISC",
+    "ICN",
+    "PIE",
+    "T20",
+    "PT",
+    "Q",
+    "RET",
+    "SLF",
+    "SIM",
+    "ERA",
+    "PLE",
+    "TRY",
 ]
 unfixable = [
-  "ERA", # do not autoremove commented out code
+    "ERA", # do not autoremove commented out code
 ]
 ignore = ["TRY003"]
 line-length = 120
