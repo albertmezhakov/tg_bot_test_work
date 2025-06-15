@@ -6,6 +6,7 @@ import sys
 import pytest_asyncio
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
 from tests_utils.dummy_config import dummy_config
 
 ROOT_DIR = pathlib.Path(__file__).resolve().parents[1]
@@ -13,6 +14,7 @@ SRC_DIR = ROOT_DIR / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.append(str(SRC_DIR))
 dummy_config()
+from infrastructure.db.uow import UnitOfWork
 from infrastructure.db.base import Base
 
 
@@ -31,6 +33,12 @@ async def engine():
 @pytest_asyncio.fixture()
 async def session_factory(engine):
     return async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+
+
+@pytest_asyncio.fixture()
+async def uow(session_factory):
+    async with UnitOfWork(session_factory()) as uow:
+        yield uow
 
 
 @pytest_asyncio.fixture(autouse=True)
