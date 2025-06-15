@@ -40,4 +40,5 @@ class BotSettings(BaseSettings):
             f"{self.postgres_port}/{self.postgres_db}"
         )
 
+
 settings = BotSettings()

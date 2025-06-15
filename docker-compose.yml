@@ -33,6 +33,7 @@ services:
   tg_bot:
     container_name: tg_bot_template
     build: .
+    command: sh -c "python -m alembic upgrade head && python src/main_bot.py"
     env_file:
       - .env
     restart: always
@@ -41,3 +42,17 @@ services:
         condition: service_healthy
       redis_fsm:
         condition: service_started
+  fast_api:
+    container_name: tg_bot_template_api
+    build: .
+    env_file:
+      - .env
+    command: sh -c "python -m alembic upgrade head && python -m uvicorn src.main_api:app --host 0.0.0.0 --port 8000"
+    restart: always
+    depends_on:
+      pg_db:
+        condition: service_healthy
+      redis_fsm:
+        condition: service_started
+    ports:
+      - "8000:8000"

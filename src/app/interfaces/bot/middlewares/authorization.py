@@ -10,20 +10,20 @@ from infrastructure.db.uow import UnitOfWork
 class AuthorizationMiddleware(BaseMiddleware):
     async def __call__(self, handler, event: TelegramObject, data):
         async with AsyncSessionLocal() as session:
-            uow = UnitOfWork(session)
-            auth_service = UserAuthService(uow)
+            async with UnitOfWork(session) as uow:
+                auth_service = UserAuthService(uow)
 
-            user_id = event.from_user.id
-            username = event.from_user.username
-            passphrase = event.text.lower() if event.text else None
+                user_id = event.from_user.id
+                username = event.from_user.username
+                passphrase = event.text.lower() if event.text else None
 
-            auth_result = await auth_service.check_or_register(
-                user_id=user_id,
-                username=username,
-                passphrase=passphrase,
-            )
-            if auth_result.status == AuthStatus.SUCCESS:
-                return await handler(event, data)
+                auth_result = await auth_service.check_or_register(
+                    user_id=user_id,
+                    username=username,
+                    passphrase=passphrase,
+                )
+                if auth_result.status == AuthStatus.SUCCESS:
+                    return await handler(event, data)
 
-            await event.answer(auth_result.message)
-            return None
+                await event.answer(auth_result.message)
+                return None

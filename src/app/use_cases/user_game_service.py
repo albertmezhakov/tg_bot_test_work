@@ -10,17 +10,15 @@ class UserGameService:
         self.uow = uow
 
     async def get_rating(self, social_id: int) -> UserRating:
-        async with self.uow:
-            total_taps = 0
-            user_best = None
-            user: User = await self.uow.users.get_by_social_id(social_id)
-            all_users: Sequence[User] = await self.uow.users.list_all()
-            if all_users is not None:
-                total_taps = sum(user.taps for user in all_users)
-                user_best = max(all_users, key=lambda u: u.taps)
-            user_taps = user.taps
-            return UserRating(user_taps, total_taps, user_best)
+        total_taps = 0
+        user_best = None
+        user: User = await self.uow.users.get_by_social_id(social_id)
+        all_users: Sequence[User] = await self.uow.users.list_all()
+        if all_users is not None:
+            total_taps = sum(user.taps for user in all_users)
+            user_best = max(all_users, key=lambda u: u.taps)
+        user_taps = user.taps
+        return UserRating(user_taps, total_taps, user_best)
 
     async def register_tap(self, user_id: int) -> User | None:
-        async with self.uow:
-            return await self.uow.users.add_tap(user_id)
+        return await self.uow.users.add_tap(user_id)

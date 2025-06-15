@@ -29,9 +29,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # copy project
 COPY src ./src
+ENV PYTHONPATH="/app/src:${PYTHONPATH}"
 COPY alembic.ini .
 COPY alembic ./alembic
 
 # run app
 WORKDIR /app
-ENTRYPOINT ["sh", "-c", "python -m alembic upgrade head && python src/main_bot.py"]
+CMD ["sh", "-c", "python -m alembic upgrade head && python src/main_bot.py"]

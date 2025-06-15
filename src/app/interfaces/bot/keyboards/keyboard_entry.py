@@ -11,18 +11,12 @@ from app.interfaces.bot.features.feature_entry import FeatureEntry
 class KeyboardEntry:
     all_keyboards: ClassVar[list[KeyboardEntry]] = []
 
-    def __init__(
-            self,
-            *,
-            features: list[list[FeatureEntry]]
-    ):
+    def __init__(self, *, features: list[list[FeatureEntry]]):
         self.features = features
         self.all_keyboards.append(self)
 
     def as_inline_markup(
-            self,
-            suffix: str = "",
-            should_add_suffix: Callable[[FeatureEntry], bool] = lambda f: True
+        self, suffix: str = "", should_add_suffix: Callable[[FeatureEntry], bool] = lambda f: True
     ) -> InlineKeyboardMarkup:
         builder = InlineKeyboardBuilder()
 
@@ -40,12 +34,7 @@ class KeyboardEntry:
                     else feature.callback_action
                 )
 
-                buttons.append(
-                    InlineKeyboardButton(
-                        text=feature.button,
-                        callback_data=callback_data
-                    )
-                )
+                buttons.append(InlineKeyboardButton(text=feature.button, callback_data=callback_data))
             builder.row(*buttons)
 
         return builder.as_markup()
