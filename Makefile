@@ -38,6 +38,9 @@ start_bot:
 start_api:
 	@poetry run uvicorn $(API_MODULE) --reload
 
+alembic_migrate:
+	@poetry run alembic upgrade head
+
 test:
 	@poetry run pytest tests/
 
