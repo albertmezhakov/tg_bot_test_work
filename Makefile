@@ -1,4 +1,7 @@
+export PYTHONPATH := $(CURDIR)/src
 SERVICE_DIR := src
+API_MODULE := $(SERVICE_DIR).main_api:app
+BOT_MODULE := $(SERVICE_DIR).main_bot
 TXT_BOLD := \e[1m
 TXT_MAGENTA := \e[35m
 TXT_RESET := \e[0m
@@ -29,5 +32,14 @@ start_docker:
 stop_docker:
 	docker-compose down
 
-start:
-	@poetry run python -m $(SERVICE_DIR).app
+start_bot:
+	@poetry run python -m $(BOT_MODULE)
+
+start_api:
+	@poetry run uvicorn $(API_MODULE) --reload
+
+test:
+	@poetry run pytest tests/
+
+test-e2e:
+	@poetry run pytest tests/e2e/
