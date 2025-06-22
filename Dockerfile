@@ -8,31 +8,28 @@ FROM base AS requirements-builder
 
 WORKDIR /build/
 
-RUN pip --no-cache-dir install poetry
+RUN pip install --no-cache-dir uv
 
-COPY pyproject.toml poetry.lock /build/
+COPY pyproject.toml uv.lock ./
 
-RUN poetry self add poetry-plugin-export
-
-RUN poetry export --without-hashes -f requirements.txt -o requirements.txt
+RUN uv sync --no-cache && \
+    uv pip freeze | grep -v 'file:///build' > requirements.txt
 
 FROM non-root AS app
 WORKDIR /app
 COPY --from=requirements-builder /build/requirements.txt /app/requirements.txt
 
-ENV PYTHONFAULTHANDLER=1 \
-  PYTHONUNBUFFERED=1 \
-  PIP_DISABLE_PIP_VERSION_CHECK=on \
-  PIP_DEFAULT_TIMEOUT=100
-
 RUN pip install --no-cache-dir -r requirements.txt
 
-# copy project
 COPY src ./src
-ENV PYTHONPATH="/app/src:${PYTHONPATH}"
 COPY alembic.ini .
 COPY alembic ./alembic
 
-# run app
-WORKDIR /app
-CMD ["sh", "-c", "python -m alembic upgrade head && python src/main_bot.py"]
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    PYTHONPATH=/app/src \
+    PATH=/home/app/.local/bin:$PATH
+
+CMD ["sh", "-c", "alembic upgrade head && python -m src.main_bot"]

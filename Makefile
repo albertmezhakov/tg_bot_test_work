@@ -7,24 +7,24 @@ TXT_MAGENTA := \e[35m
 TXT_RESET := \e[0m
 
 setup:
-	@poetry install --no-root
+	@uv sync
 
 setup-pre-commit:
-	@poetry run pre-commit install
+	@uv run pre-commit install
 
 lint:
 	@printf "${TXT_BOLD}${TXT_MAGENTA}========================== BLACK ==============================${TXT_RESET}\n"
-	@poetry run black $(SERVICE_DIR)/
+	@uv run black $(SERVICE_DIR)/
 	@printf "${TXT_BOLD}${TXT_MAGENTA}======================== END BLACK ============================${TXT_RESET}\n"
 	@printf "${TXT_BOLD}${TXT_MAGENTA}=========================== MYPY ==============================${TXT_RESET}\n"
-	@poetry run mypy $(SERVICE_DIR)/
+	@uv run mypy $(SERVICE_DIR)/
 	@printf "${TXT_BOLD}${TXT_MAGENTA}========================= END MYPY ============================${TXT_RESET}\n"
 	@printf "${TXT_BOLD}${TXT_MAGENTA}=========================== RUFF ==============================${TXT_RESET}\n"
-	@poetry run ruff check --fix --show-fixes --exit-non-zero-on-fix .
+	@uv run ruff check --fix --show-fixes --exit-non-zero-on-fix .
 	@printf "${TXT_BOLD}${TXT_MAGENTA}========================= END RUFF ============================${TXT_RESET}\n"
 
 format:
-	@poetry run black $(SERVICE_DIR)/
+	@uv run black $(SERVICE_DIR)/
 
 start_docker:
 	docker-compose down && docker-compose up --build -d && docker-compose logs -f
@@ -33,16 +33,16 @@ stop_docker:
 	docker-compose down
 
 start_bot:
-	@poetry run python -m $(BOT_MODULE)
+	@uv run python -m $(BOT_MODULE)
 
 start_api:
-	@poetry run uvicorn $(API_MODULE) --reload
+	@uv run uvicorn $(API_MODULE) --reload
 
 alembic_migrate:
-	@poetry run alembic upgrade head
+	@uv run alembic upgrade head
 
 test:
-	@poetry run pytest tests/
+	@uv run pytest tests/
 
 test-e2e:
-	@poetry run pytest tests/e2e/
+	@uv run pytest tests/e2e/
