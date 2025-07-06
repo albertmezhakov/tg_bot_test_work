@@ -13,7 +13,9 @@ router = Router()
 
 @router.message(TextInIgnoreCase(features.rating.triggers))
 async def rating_cmd(message: Message, user_game_service: UserGameService):
-    rating: UserRating = await user_game_service.get_rating(message.from_user.id)
+    rating: UserRating | None = await user_game_service.get_rating(message.from_user.id)
+    if rating is None:
+        return
     await message.answer(
         f"Всего нажатий твоих: {rating.user_taps}\nВсего нажатий: {rating.total_taps}",
         reply_markup=keyboards.menu_kb.as_reply_markup(),

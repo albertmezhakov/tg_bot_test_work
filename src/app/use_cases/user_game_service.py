@@ -9,10 +9,12 @@ class UserGameService:
     def __init__(self, uow: AbstractUnitOfWork):
         self.uow = uow
 
-    async def get_rating(self, social_id: int) -> UserRating:
+    async def get_rating(self, social_id: int) -> UserRating | None:
         total_taps = 0
         user_best = None
         user: User = await self.uow.users.get_by_social_id(social_id)
+        if user is None:
+            return None
         all_users: Sequence[User] = await self.uow.users.list_all()
         if all_users is not None:
             total_taps = sum(user.taps for user in all_users)
