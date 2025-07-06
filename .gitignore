@@ -147,3 +147,4 @@ config/.secrets.yaml
 
 # docker-compose kafka
 zk-single-kafka-single/
+.env
